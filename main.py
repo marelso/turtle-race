@@ -1,5 +1,6 @@
 from turtle import *
 from random import randint
+import tkinter as tk
 
 drawing_speed = 20
 
