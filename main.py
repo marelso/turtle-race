@@ -20,32 +20,40 @@ def draw_speedway():
         forward(20)
 
 
-def create_turtle(color, x, y):
+def create_turtle(color, coords):
     turtle = Turtle()
     turtle.color(color)
     turtle.shape('turtle')
     turtle.penup()
-    turtle.goto(x, y)
+    turtle.goto(coords[0], coords[1])
     turtle.pendown()
     return turtle
 
 
 def turn(turtles):
     for turn in range(100):
-        turtles[0].forward(randint(1,5))
-        turtles[1].forward(randint(1,5))
+        for turtle in turtles:
+            turtle.forward(randint(1, 5))
+
+
+def start(competitors):
+    base = 100
+    turtles = []
+
+    for id in range(competitors):
+        color = input("Choose a color for the turtle:")
+
+        turtles.append(create_turtle(color, [-160, base]))
+        base -= 30
+
+    return turtles
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    turtles = []
+    turtles = start(int(input("Choose the number of competitors:")))
+
     draw_speedway()
-
-    erica = create_turtle('green', -160, 100)
-    marelso = create_turtle('blue', -160, 70)
-
-    turtles.append(erica)
-    turtles.append(marelso)
 
     turn(turtles)
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
