@@ -1,7 +1,7 @@
 from turtle import *
 from random import randint
 
-drawing_speed = 10
+drawing_speed = 20
 
 
 def draw_speedway():
