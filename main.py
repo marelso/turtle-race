@@ -1,8 +1,10 @@
 from turtle import *
 
+drawing_speed = 10
+
 
 def draw_speedway():
-    speed(5)
+    speed(drawing_speed)
     penup()
     goto(-140, 140)
     for step in range(16):
@@ -29,6 +31,6 @@ def create_turtle():
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     draw_speedway()
-
+    create_turtle()
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
