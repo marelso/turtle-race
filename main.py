@@ -2,6 +2,8 @@ from turtle import *
 from random import randint
 import tkinter as tk
 
+drawing_speed = 20
+
 
 class NumberField(tk.Frame):
     def __init__(self, parent):
@@ -19,10 +21,8 @@ class NumberField(tk.Frame):
         self.master.withdraw()  # hide NumberField window
         TextFields(self.master, num, self.on_start)
 
-    def on_start(self, values):
-        print(f"Start button clicked with values: {values}")
-
-        turtles = start(values)
+    def on_start(self, colors):
+        turtles = start(colors)
 
         draw_speedway()
 
@@ -39,7 +39,7 @@ class TextFields(tk.Toplevel):
 
         for i in range(num):
             var = tk.StringVar()
-            tk.Label(self, text=f"Text {i + 1}:").grid(row=i, column=0)
+            tk.Label(self, text=f"#{i + 1} color:").grid(row=i, column=0)
             tk.Entry(self, textvariable=var).grid(row=i, column=1)
             self.text_vars.append(var)
 
@@ -52,7 +52,15 @@ class TextFields(tk.Toplevel):
         self.master.deiconify()  # show NumberField window again
 
 
-drawing_speed = 20
+def find_winner(turtles):
+    winner = max(turtles, key=lambda x: x.xcor())
+    message = f"The {winner.color()[0]} turtle wins!"
+    window = tk.Toplevel()
+    window.geometry("+%d+%d" % ((root.winfo_screenwidth() - window.winfo_reqwidth()) / 2,
+                                (root.winfo_screenheight() - window.winfo_reqheight()) / 2))
+    window.lift(root)
+    tk.Label(window, text=message, font=("Arial", 16)).pack(pady=20)
+    tk.Button(window, text="OK", command=window.destroy).pack()
 
 
 def draw_speedway():
@@ -85,6 +93,10 @@ def turn(turtles):
     for turn in range(100):
         for turtle in turtles:
             turtle.forward(randint(1, 5))
+
+        if any(turtle.xcor() >= 140 for turtle in turtles):
+            find_winner(turtles)
+            break
 
 
 def start(competitors):
